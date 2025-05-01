@@ -23,7 +23,7 @@ $stmt->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library Haven - Manage Users</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
 </head>
 <body class="content-page">
     <header class="header">
@@ -35,7 +35,7 @@ $stmt->close();
             <h2 class="sidebar-title">Menu</h2>
             <nav class="vertical-nav">
                 <ul>
-                <li><a href="index.php" class="nav-link">🏠 Home</a></li>
+                    <li><a href="index.php" class="nav-link">🏠 Home</a></li>
                     <li><a href="books.php" class="nav-link">📚 Books</a></li>
                     <li><a href="users.php" class="nav-link active">👥 Users</a></li>
                     <li><a href="list-books.php" class="nav-link">📖 List Books</a></li>
@@ -58,7 +58,7 @@ $stmt->close();
                 <div class="form-group">
                     <input type="checkbox" id="add-user" class="toggle-input">
                     <label for="add-user" class="btn btn-primary">🆔 Add User</label>
-                    <form action="api.php" method="POST" class="form-card toggle-form">
+                    <form action="api.php" method="POST" class="form-card toggle-form centered-form">
                         <h3>Add User</h3>
                         <input type="hidden" name="userId" value="">
                         <input type="text" name="userFirstName" placeholder="First Name" required>
@@ -88,30 +88,34 @@ $stmt->close();
                                 <td><?php echo htmlspecialchars($user['last_name']); ?></td>
                                 <td><?php echo htmlspecialchars($user['email']); ?></td>
                                 <td class="table-actions">
-                                    <input type="checkbox" id="edit-user-<?php echo $user['id']; ?>" class="toggle-input">
-                                    <label for="edit-user-<?php echo $user['id']; ?>" class="btn btn-primary">✏️ Edit</label>
-                                    <form action="api.php" method="POST" class="form-card toggle-form centered-form">
-                                        <h3>Edit User</h3>
-                                        <input type="hidden" name="userId" value="<?php echo $user['id']; ?>">
-                                        <input type="text" name="userFirstName" placeholder="First Name" value="<?php echo htmlspecialchars($user['name']); ?>" required>
-                                        <input type="text" name="userLastName" placeholder="Last Name" value="<?php echo htmlspecialchars($user['last_name']); ?>" required>
-                                        <input type="email" name="userEmail" placeholder="Email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
-                                        <div class="button-group">
-                                            <button type="submit" name="action" value="saveUser" class="btn btn-primary">Save</button>
-                                            <label for="edit-user-<?php echo $user['id']; ?>" class="btn btn-cancel">Cancel</label>
-                                        </div>
-                                    </form>
-                                    <input type="checkbox" id="delete-user-<?php echo $user['id']; ?>" class="toggle-input">
-                                    <label for="delete-user-<?php echo $user['id']; ?>" class="btn btn-danger">🗑️ Delete</label>
-                                    <form action="api.php" method="POST" class="form-card toggle-form">
-                                        <h3>Confirm Deletion</h3>
-                                        <p>Are you sure you want to delete "<?php echo htmlspecialchars($user['name'] . ' ' . $user['last_name']); ?>"?</p>
-                                        <input type="hidden" name="userId" value="<?php echo $user['id']; ?>">
-                                        <div class="button-group">
-                                            <button type="submit" name="action" value="deleteUser" class="btn btn-danger">Delete</button>
-                                            <label for="delete-user-<?php echo $user['id']; ?>" class="btn btn-cancel">Cancel</label>
-                                        </div>
-                                    </form>
+                                    <div class="action-container">
+                                        <input type="checkbox" id="edit-user-<?php echo $user['id']; ?>" class="toggle-input">
+                                        <label for="edit-user-<?php echo $user['id']; ?>" class="btn btn-primary">✏️ Edit</label>
+                                        <form action="api.php" method="POST" class="form-card toggle-form centered-form">
+                                            <h3>Edit User</h3>
+                                            <input type="hidden" name="userId" value="<?php echo $user['id']; ?>">
+                                            <input type="text" name="userFirstName" placeholder="First Name" value="<?php echo htmlspecialchars($user['name']); ?>" required>
+                                            <input type="text" name="userLastName" placeholder="Last Name" value="<?php echo htmlspecialchars($user['last_name']); ?>" required>
+                                            <input type="email" name="userEmail" placeholder="Email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
+                                            <div class="button-group">
+                                                <button type="submit" name="action" value="saveUser" class="btn btn-primary">Save</button>
+                                                <label for="edit-user-<?php echo $user['id']; ?>" class="btn btn-cancel">Cancel</label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="action-container">
+                                        <input type="checkbox" id="delete-user-<?php echo $user['id']; ?>" class="toggle-input">
+                                        <label for="delete-user-<?php echo $user['id']; ?>" class="btn btn-danger">🗑️ Delete</label>
+                                        <form action="api.php" method="POST" class="form-card toggle-form centered-form">
+                                            <h3>Confirm Deletion</h3>
+                                            <p>Are you sure you want to delete "<?php echo htmlspecialchars($user['name'] . ' ' . $user['last_name']); ?>"?</p>
+                                            <input type="hidden" name="userId" value="<?php echo $user['id']; ?>">
+                                            <div class="button-group">
+                                                <button type="submit" name="action" value="deleteUser" class="btn btn-danger">Delete</button>
+                                                <label for="delete-user-<?php echo $user['id']; ?>" class="btn btn-cancel">Cancel</label>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
@@ -130,32 +134,5 @@ $stmt->close();
     <footer class="footer">
         <p>© 2025 Library Haven. All Rights Reserved.</p>
     </footer>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const usersTable = document.getElementById('usersTable');
-            if (usersTable) {
-                usersTable.querySelectorAll('tr').forEach(row => {
-                    const userId = row.querySelector('input[type="checkbox"]')?.id.split('-').pop();
-                    if (!userId) return;
-
-                    const editCheckbox = document.getElementById(`edit-user-${userId}`);
-                    const deleteCheckbox = document.getElementById(`delete-user-${userId}`);
-
-                    if (editCheckbox && deleteCheckbox) {
-                        editCheckbox.addEventListener('change', function () {
-                            if (this.checked) {
-                                deleteCheckbox.checked = false;
-                            }
-                        });
-                        deleteCheckbox.addEventListener('change', function () {
-                            if (this.checked) {
-                                editCheckbox.checked = false;
-                            }
-                        });
-                    }
-                });
-            }
-        });
-    </script>
 </body>
 </html>

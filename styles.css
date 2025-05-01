@@ -168,32 +168,23 @@ body {
 }
 
 /* Forms */
-.toggl-input {
-    display: none;
-}
-
-.toggl-form {
-    display: none;
-    animation: fadeIn 0.4s ease-out;
-    margin-top: 1.5rem;
-}
-
-.toggl-input:checked ~ .toggl-form {
-    display: block;
-}
-
 .toggle-input {
     display: none;
 }
 
 .toggle-form {
     display: none;
-    animation: fadeIn 0.4s ease-out;
-    margin-top: 1.5rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.toggle-input:checked ~ .toggle-form {
-    display: block;
+.toggle-input:checked + .btn + .toggle-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .form-card {
@@ -239,15 +230,15 @@ body {
 
 /* Centered Form */
 .centered-form {
+    background: white;
+    padding: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    border-radius: 8px;
     max-width: 500px;
-    margin: 1.5rem auto;
-    background: #f9f9f7;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    border: 1px solid #ccc;
-    transform: translateY(0);
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    width: 90%;
+    box-sizing: border-box;
+    transition: none;
 }
 
 .centered-form h3 {
@@ -278,6 +269,28 @@ body {
 .centered-form label.btn {
     padding: 0.9rem 1.5rem;
     font-size: 1.1rem;
+}
+
+/* Backdrop and Scroll Prevention */
+body:has(.toggle-input:checked)::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+}
+
+body:has(.toggle-input:checked) {
+    overflow: hidden;
+}
+
+/* Action Container */
+.action-container {
+    display: inline-block;
+    margin-right: 10px;
 }
 
 /* Tables */
@@ -340,8 +353,17 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
 .fade-in {
     animation: fadeIn 0.5s ease-out;
+}
+
+.fade-out {
+    animation: fadeOut 0.5s ease forwards;
 }
 
 /* Horizontal Navigation */
@@ -512,13 +534,4 @@ body {
         font-size: 1rem;
         padding: 0.8rem;
     }
-}
-/* New fade-out animation */
-@keyframes fadeOut {
-    from { opacity: 1; }
-    to { opacity: 0; }
-}
-
-.fade-out {
-    animation: fadeOut 0.5s ease forwards;
 }
