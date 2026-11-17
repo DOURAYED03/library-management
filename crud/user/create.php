@@ -8,11 +8,9 @@ function createUser($name, $lastName, $email) {
         die("Prepare failed: " . $conn->error);
     }
     $stmt->bind_param("sss", $name, $lastName, $email);
-    if ($stmt->execute()) {
-        return $conn->insert_id;
-    } else {
-        return false;
-    }
+    $result = $stmt->execute();
+    $userId = $result ? $conn->insert_id : false;
     $stmt->close();
+    return $userId;
 }
 ?>

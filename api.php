@@ -9,7 +9,10 @@ require_once 'crud/user/update.php';
 require_once 'crud/user/delete.php';
 
 $action = $_POST['action'] ?? '';
-$redirect = $_SERVER['HTTP_REFERER'] ?? 'index.php';
+$allowedRedirects = ['index.php', 'books.php', 'users.php', 'list-books.php', 'list-users.php'];
+$refererPath = parse_url($_SERVER['HTTP_REFERER'] ?? '', PHP_URL_PATH);
+$referer = $refererPath ? basename($refererPath) : '';
+$redirect = in_array($referer, $allowedRedirects, true) ? $referer : 'index.php';
 
 switch ($action) {
     case 'saveBook':

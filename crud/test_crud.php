@@ -40,7 +40,7 @@ echo $deleteResult ? "Book deleted successfully\n" : "Failed to delete book\n";
 echo "\nTesting User CRUD:\n";
 
 // Create user
-$userId = createUser("testuser", "test@example.com", "password123");
+$userId = createUser("testuser", "Test User", "test@example.com");
 if ($userId) {
     echo "User created with ID: $userId\n";
 } else {
@@ -56,12 +56,12 @@ if ($user) {
 }
 
 // Update user (without password change)
-$updateUserResult = updateUser($userId, "updateduser", "updated@example.com");
+$updateUserResult = updateUser($userId, "updateduser", "Updated User", "updated@example.com");
 echo $updateUserResult ? "User updated successfully\n" : "Failed to update user\n";
 
 // Update user (with password change)
-$updateUserResultPwd = updateUser($userId, "updateduser", "updated@example.com", "newpassword123");
-echo $updateUserResultPwd ? "User password updated successfully\n" : "Failed to update user password\n";
+$updateUserResultPwd = updateUser($userId, "updateduser", "Updated User", "updated@example.com");
+echo $updateUserResultPwd ? "User updated successfully a second time\n" : "Failed to update user a second time\n";
 
 // Delete user
 $deleteUserResult = deleteUser($userId);
