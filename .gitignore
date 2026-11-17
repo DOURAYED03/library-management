@@ -1,0 +1,6 @@
+.env
+*.log
+.phpunit.cache/
+vendor/
+node_modules/
+.DS_Store
